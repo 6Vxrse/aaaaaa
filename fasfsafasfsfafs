@@ -1,3 +1,5 @@
+-- Torso Range Indicator
+
 local plr = game:GetService("Players").LocalPlayer
 local RunService = game:GetService("RunService")
 
@@ -19,13 +21,17 @@ end
 
 RunService.RenderStepped:Connect(function()
     local GoalPos = ReturnGoal().Position
+    local HumanoidRootPart = plr.Character.HumanoidRootPart
     if ReturnGoal() ~= nil and plr.Character:FindFirstChild("Torso") then
-        if (GoalPos - plr.Character.Torso.Position).Magnitude <= 71 then
-            ReturnGoal().Color = Color3.fromRGB(0, 255, 0)
-            ReturnGoal().Material = "Neon"
-        elseif (GoalPos - plr.Character.Torso.Position).Magnitude > 71 then
-            ReturnGoal().Color = Color3.fromRGB(255, 0, 4)
-            ReturnGoal().Material = "Plastic"
+        if (GoalPos - plr.Character.Torso.Position).Magnitude <= 71.3 then
+            HumanoidRootPart.Color = Color3.fromRGB(0, 255, 0)
+            HumanoidRootPart.Size = Vector3.new(2.1, 2, 1.4)
+            HumanoidRootPart.Material = "Neon"
+            HumanoidRootPart.Transparency = 0
+        elseif (GoalPos - plr.Character.Torso.Position).Magnitude > 71.3 then
+            HumanoidRootPart.Transparency = 1
+            HumanoidRootPart.Size = Vector3.new(2,2,1)
+            HumanoidRootPart.Material = "Plastic"
         end
     end
 end)
