@@ -1,0 +1,64 @@
+local ProtectGui = protectgui or (syn and syn.protect_gui) or (function() end);
+
+local plr = game:GetService("Players").LocalPlayer
+local RunService = game:GetService("RunService")
+local magnet
+
+local CoreGui = game:GetService('CoreGui');
+local ScreenGui = Instance.new('ScreenGui');
+ProtectGui(ScreenGui);
+
+local TextLabel = Instance.new("TextLabel")
+
+ScreenGui.ZIndexBehavior = Enum.ZIndexBehavior.Global;
+ScreenGui.Parent = CoreGui;
+
+TextLabel.Parent = ScreenGui
+TextLabel.BackgroundColor3 = Color3.fromRGB(85, 255, 127)
+TextLabel.Position = UDim2.new(0.415361673, 0, 0.0469715707, 0)
+TextLabel.Size = UDim2.new(0, 200, 0, 50)
+TextLabel.Font = Enum.Font.SourceSans
+TextLabel.TextColor3 = Color3.fromRGB(0, 0, 0)
+TextLabel.TextSize = 14.000
+
+--print((plr.Character.Torso.Position - ReturnGoal().Position).Magnitude)
+
+function ReturnGoal()
+    local Dist, Goal = math.huge
+    for i, v in pairs(game:GetService("Workspace").Courts:GetDescendants()) do
+        if v.Name == 'Hoop' and v:IsA("MeshPart") and v.Parent.Name == 'C__Rim' then
+            local mag = (v.Position - plr.Character.Torso.Position).Magnitude
+            if Dist > mag then
+                Dist = mag
+                Goal = v
+            end
+        end
+    end
+    return Goal
+end
+
+function Round(To_Round)
+    local divided = To_Round / 5
+    local rounded = 5 * math.floor(divided)
+    if rounded > 85 then
+        rounded = 85
+    return rounded
+    else 
+    return rounded
+    end
+end
+
+RunService.RenderStepped:Connect(function()
+if (plr.Character.Torso.Position - ReturnGoal().Position).Magnitude > 59 then
+    magnet = (plr.Character.Torso.Position - ReturnGoal().Position).Magnitude * 1.3
+elseif (plr.Character.Torso.Position - ReturnGoal().Position).Magnitude > 50 then
+    magnet = (plr.Character.Torso.Position - ReturnGoal().Position).Magnitude * 1.5
+elseif (plr.Character.Torso.Position - ReturnGoal().Position).Magnitude > 46 then
+    magnet = (plr.Character.Torso.Position - ReturnGoal().Position).Magnitude * 1.55
+elseif (plr.Character.Torso.Position - ReturnGoal().Position).Magnitude > 40  then
+    magnet = (plr.Character.Torso.Position - ReturnGoal().Position).Magnitude * 1.64
+end
+
+TextLabel.Text = "Recommended Power: "..tostring(Round(magnet))
+end)
+
