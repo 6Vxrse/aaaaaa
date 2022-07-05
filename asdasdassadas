@@ -22,11 +22,11 @@ end
 RunService.RenderStepped:Connect(function()
     local GoalPos = ReturnGoal().Position
     if ReturnGoal() ~= nil and plr.Character:FindFirstChild("Torso") then
-        if (GoalPos - plr.Character.Torso.Position).Magnitude <= 71 then
+        if (GoalPos - plr.Character.Torso.Position).Magnitude <= 71.5 then
             ReturnGoal().Color = Color3.fromRGB(0, 255, 0)
             ReturnGoal().Material = "Neon"
-        elseif (GoalPos - plr.Character.Torso.Position).Magnitude > 71 then
-            ReturnGoal().Color = Color3.fromRGB(255, 0, 4)
+        elseif (GoalPos - plr.Character.Torso.Position).Magnitude > 71.5 then
+            ReturnGoal().Color = Color3.fromRGB(170, 85, 0)
             ReturnGoal().Material = "Plastic"
         end
     end
